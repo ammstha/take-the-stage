@@ -145,7 +145,7 @@
                                                 <th>Performance Level</th>
                                                 <th>Event Name</th>
                                             </tr>
-                                            <tr>
+
                                             @foreach($studioPerformers->where('status','1') as $key=>$studioPerformer)
                                                 {{--{{dd($studioPerformer->competitionDetail)}}--}}
                                                 <tr>
@@ -164,10 +164,12 @@
                                                     <td>{{ $studioPerformer->age_class}}</td>
                                                     <td>{{ $studioPerformer->performance_level}}</td>
                                                     <td>{{ $studioPerformer->competitionDetail->name}}</td>
+
+                                                    <td><button><a href="{{route('editEvent',$studioPerformer->id)}}">Edit</a></button></td>
                                                 </tr>
 
                                                 @endforeach
-                                                </tr>
+
 
 
                                         </table>

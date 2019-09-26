@@ -35,6 +35,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['rol
     Route::get('studioPDF/{studio}', 'StudioController@studioPDF')->name('studioPDF');
     Route::get('studiosPDF', 'StudioController@studiosPDF')->name('studiosPDF');
     Route::get('downloadMusic', 'StudioController@downloadMusic')->name('downloadMusic');
+    Route::get('editEvent/{id}', 'StudioController@editEvent')->name('editEvent');
+    Route::put('updateEvent/{performerEntry_Id}', 'StudioController@updateEvent')->name('updateEvent');
 
 
 

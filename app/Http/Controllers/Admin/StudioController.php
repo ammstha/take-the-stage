@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\CompetitionDetail;
+use App\EventDateTime;
 use App\Http\Requests\UpdateStudio;
 use App\Mail\ApprovedStudio;
 use App\PerformerEntry;
@@ -59,8 +61,8 @@ class StudioController extends Controller
     public function show(User $studio)
     {
 
-        $studioPerformers= $studio->performerEntries;
-        return view('admin.studio.show',compact('studioPerformers','studio'));
+        $studioPerformers = $studio->performerEntries;
+        return view('admin.studio.show', compact('studioPerformers', 'studio'));
     }
 
     /**
@@ -73,7 +75,7 @@ class StudioController extends Controller
     {
 
 
-        $states=[
+        $states = [
             "AL" => "Alabama",
             "AK" => "Alaska",
             "AZ" => "Arizona",
@@ -125,13 +127,107 @@ class StudioController extends Controller
             "WV" => "West Virginia",
             "WY" => "Wyoming",
         ];
-        $sname= auth()->user()->name;
+        $sname = auth()->user()->name;
 //        $sts = array();
 //        foreach ($states as $state) {
 //            $sts[$state->id] = $state->name;
 //        }
-        return view('admin.studio.edit', compact('studio','states','sname'));
+        return view('admin.studio.edit', compact('studio', 'states', 'sname'));
 //        return view('admin.studio.edit');
+    }
+
+
+    public function editevent($id)
+    {
+        $performerEntry_Id = $id;
+        $competitionDetails = CompetitionDetail::latest()->get();
+        return view('admin.studio.editEvent', compact('competitionDetails', 'performerEntry_Id'));
+    }
+
+    public function updateEvent(Request $request, $performerEntry_Id)
+    {
+        try {
+
+
+            $performerEntry = PerformerEntry::where('id', $performerEntry_Id)->first();
+
+//            dd($performerEntry->competitionDetail_id);
+
+
+
+            $events = EventDateTime::where('competition_details_id', $request->get('competitionDetail_id'))->get();
+//            dd($events);
+            foreach ($events as $event) {
+                //while negative
+                while ($event->remainingTime >= 5) {
+                    $remainTimeFirst = $event->remainingTime;
+                    if ($performerEntry->division == "Solo") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Duo/Trio") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Small Group") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Large Group") {
+                        $minus = 5;
+                    }
+                    if ($performerEntry->division == "Line") {
+                        $minus = 6;
+                    }
+
+                    $remainTimeAfter = $remainTimeFirst - $minus;
+                    if ($performerEntry->exceed) {
+                        $remainTimeAfter = $remainTimeFirst - $minus - 2;
+                    }
+
+
+                    $event->update(['remainingTime' => $remainTimeAfter]);
+                    break;
+                }
+                break;
+            }
+
+            $addtimeEvents=EventDateTime::where('competition_details_id', $performerEntry->competitionDetail_id)->get();
+            foreach ($addtimeEvents as $event) {
+                //while negative
+                while ($event->remainingTime >= 5) {
+                    $remainTimeFirst = $event->remainingTime;
+                    if ($performerEntry->division == "Solo") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Duo/Trio") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Small Group") {
+                        $minus = 4;
+                    }
+                    if ($performerEntry->division == "Large Group") {
+                        $minus = 5;
+                    }
+                    if ($performerEntry->division == "Line") {
+                        $minus = 6;
+                    }
+
+                    $remainTimeAfter = $remainTimeFirst + $minus;
+                    if ($performerEntry->exceed) {
+                        $remainTimeAfter = $remainTimeFirst + $minus + 2;
+                    }
+
+
+                    $event->update(['remainingTime' => $remainTimeAfter]);
+                    break;
+                }
+                break;
+            }
+
+            $performerEntry->update(['competitionDetail_id' => $request->competitionDetail_id]);
+        } catch (\Exception $e) {
+
+        }
+        return redirect()->route('studio.index');
+
     }
 
     /**
@@ -143,14 +239,14 @@ class StudioController extends Controller
      */
     public function update(Request $request, User $studio)
     {
-         $data = [
+        $data = [
             'studioX' => $request->get('status'),
-            'approved_at'=>now(),
+            'approved_at' => now(),
         ];
 //
-         if($request->get('status')){
+        if ($request->get('status')) {
             Mail::send(new ApprovedStudio($studio));
-         }
+        }
         $studio->update($data);
         return redirect()->back();
     }
@@ -162,8 +258,8 @@ class StudioController extends Controller
             $data = $request->data();
             $studio->update($data);
 
-            $name=[
-                'name'=>$request->name
+            $name = [
+                'name' => $request->name
             ];
             if ($request->name) {
                 $studio->user->update($name);
@@ -176,6 +272,7 @@ class StudioController extends Controller
         }
 
     }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -191,12 +288,15 @@ class StudioController extends Controller
         return redirect()->route('studio.index');
     }
 
-    public function studioPDF(User $studio){
+    public function studioPDF(User $studio)
+    {
 
         $pdf = PDF::loadView('admin.pdf.studiodetails', compact('studio'));
         return $pdf->stream('studio.pdf');
     }
-    public function studiosPDF(){
+
+    public function studiosPDF()
+    {
 
 //        $studioPerformers= $studio->performerEntries;
         $studios = User::whereHas('roles', function ($query) {
@@ -207,13 +307,14 @@ class StudioController extends Controller
         return $pdf->stream('studio.pdf');
     }
 
-    public function downloadMusic(){
-        $paidPerformerEntries=PerformerEntry::where('status',1)->get();
+    public function downloadMusic()
+    {
+        $paidPerformerEntries = PerformerEntry::where('status', 1)->get();
         $zipname = 'file.zip';
         $zip = new ZipArchive;
         $zip->open($zipname, ZipArchive::CREATE);
 
-        foreach ($paidPerformerEntries as $performerEntry){//        $file_arrays=[];
+        foreach ($paidPerformerEntries as $performerEntry) {//        $file_arrays=[];
             $zip->addFile($performerEntry->file->first()->url);
 //            $file_arrays=$performerEntry->file->first()->url;
 
@@ -221,7 +322,7 @@ class StudioController extends Controller
         $zip->close();
 
         header('Content-Type: application/zip');
-        header('Content-disposition: attachment; filename='.$zipname);
+        header('Content-disposition: attachment; filename=' . $zipname);
         header('Content-Length: ' . filesize($zipname));
         readfile($zipname);
 
