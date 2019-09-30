@@ -132,16 +132,7 @@
 
                                 {{--<input type="text" id="averageAge" size="50">--}}
 
-                                <!--<div class="form-group">-->
-                                <!--    <label for="a">Performance Category</label><br>-->
-                                <!--    @foreach($performanceCategories as $performanceCategory)-->
-                                <!--        <label style="margin-right:30px">-->
-                                <!--            <input type="checkbox" name="performanceCategories[]"-->
-                                <!--                   value="{{$performanceCategory->id}}">-->
-                                <!--            {{$performanceCategory->name}}-->
-                                <!--        </label>-->
-                                <!--    @endforeach-->
-                                <!--</div>-->
+
 
                                 <div class="form-group">
                                   <label for="sel1">Performance Categories</label>

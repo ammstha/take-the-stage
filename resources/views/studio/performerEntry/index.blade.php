@@ -102,24 +102,26 @@
                                             @endif
                                         </td>
                                         <td>
-
+                                            @if(!$performerEntry->status)
                                             <a href="{{route('studio.performerEntry.edit',$performerEntry->id)}}">
                                                 <button type="button" class="btn btn-primary btn-sm">Edit
                                                 </button>
                                             </a>
+                                                <div class="d-inline-block">
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                                            data-target="#deleteperformerEntry-{{$performerEntry->id}}">
+                                                        Delete
+                                                    </button>
+
+                                                </div>
+                                            @endif
 
                                             <a href="{{route('studio.performerEntry.duplicate',$performerEntry->id)}}">
                                                 <button type="button" class="btn btn-default btn-sm">Duplicate
                                                 </button>
                                             </a>
 
-                                            <div class="d-inline-block">
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                        data-target="#deleteperformerEntry-{{$performerEntry->id}}">
-                                                    Delete
-                                                </button>
 
-                                            </div>
                                         </td>
                                     </tr>
                                     <div class="modal fade" id="deleteperformerEntry-{{$performerEntry->id}}"

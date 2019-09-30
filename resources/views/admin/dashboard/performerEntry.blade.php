@@ -109,7 +109,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                        <label><input type="checkbox" value="{{ $performerEntry->exceed}}" name="exceed" id="exceedCheckbox" disabled>
+                                        <label><input type="checkbox" name="exceed" id="exceedCheckbox" {{ $performerEntry->exceed ? 'checked' : '' }} disabled>
                                             Please check here if an extended time of 2 minute is required for any entry that
                                             exceeds the standard time limit.Solo, Duos/Trios are not eligible for
                                             this option. Group and line production only.There is an additional charge of $3
@@ -119,7 +119,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <label><input type="checkbox" value="{{ $performerEntry->donate}}" name="donate" disabled>
+                                            <label><input type="checkbox" name="donate" {{ $performerEntry->donate ? 'checked' : '' }}disabled>
                                                 Please check here if your studio would like to donate the cost of adjucationa
                                                 award(for group only) to charity of your choice. Studios will receive a letter
                                                 of recognnigation.
@@ -128,7 +128,8 @@
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <label><input type="checkbox" value="{{ $performerEntry->prp}}" name="prop" disabled>
+                                            {{--{{dd($performerEntry->prop)}}--}}
+                                            <label><input type="checkbox"  name="prop" {{ $performerEntry->prop ? 'checked' : '' }} disabled>
                                                 Please check here if your studio would like to use a prop for this entry. A time
                                                 limit of 2 minutes total will be allowed for both the set-up and a strike of
                                                 props and is the sole responsibility of the studio.

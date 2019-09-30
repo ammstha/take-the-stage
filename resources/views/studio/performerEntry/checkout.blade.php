@@ -148,6 +148,7 @@
                             <label><input type="checkbox" name="competitionDetails[{{$key}}][id]" value="{{ $a_performerEntry['competition_detail_id']}}" checked hidden></label>
                             <label><input type="text" name="competitionDetails[{{$key}}][division]" value="{{ $a_performerEntry['division']}}" hidden></label>
                             <label><input type="text" name="competitionDetails[{{$key}}][exceed]" value="{{ $a_performerEntry['exceed']}}" hidden></label>
+                            <label><input type="text" name="competitionDetails[{{$key}}][prop]" value="{{ $a_performerEntry['prop']}}" hidden></label>
 
                                {{--<input id="perfoermerEntries" type="hidden" name="performerEntries" value="{{$a_performerEntries }}"></p>--}}
                             @endforeach

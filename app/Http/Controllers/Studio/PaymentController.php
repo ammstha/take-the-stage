@@ -169,7 +169,10 @@ class PaymentController extends Controller
                             }
 
                             $remainTimeAfter = $remainTimeFirst - $minus;
-                            if ($competiondetail['exceed']) {
+                            if ($competiondetail['exceed'] && $competiondetail['prop']) {
+                                $remainTimeAfter = $remainTimeFirst - $minus - 2 - 2 ;
+                            }
+                            if ( ($competiondetail['exceed'] && !$competiondetail['prop']) || (!$competiondetail['exceed'] && $competiondetail['prop']) ) {
                                 $remainTimeAfter = $remainTimeFirst - $minus - 2 ;
                             }
 

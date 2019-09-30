@@ -21,24 +21,24 @@
                             </a>
                             </span>
                         </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover">
-                            <tr>
-                                <td><b>Event Name:</b></td>
-                                <td>{{$event->name}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Event Type:</b></td>
-                                <td>{{$event->eGroup}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Event Location:</b></td>
-                                <td>{{$event->location}}</td>
-                            </tr>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover">
+                                <tr>
+                                    <td><b>Event Name:</b></td>
+                                    <td>{{$event->name}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Event Type:</b></td>
+                                    <td>{{$event->eGroup}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Event Location:</b></td>
+                                    <td>{{$event->location}}</td>
+                                </tr>
 
 
-                        </table>
-                    </div>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -57,21 +57,21 @@
                             @foreach($performanceLevels as $level)
 
                                 @if (!$performerEntries->where('performance_level',$level)->isEmpty())
-                                <div class="card-header">
-                                    <h3 class="card-title">Event Performer Entry ({{$level}})</h3>
-                                </div>
+                                    <div class="card-header">
+                                        <h3 class="card-title">Event Performer Entry ({{$level}})</h3>
+                                    </div>
 
 
-                                <!-- /.card-header -->
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover">
-                                        <tr>
-                                            <th>Performer Entry Title</th>
-                                            <th>Studio Name</th>
-                                            <th>Division</th>
-                                            <th>Performance Level </th>
-                                        </tr>
-                                        {{--{{dd($performerEntries)}}--}}
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover">
+                                            <tr>
+                                                <th>Performer Entry Title</th>
+                                                <th>Studio Name</th>
+                                                <th>Division</th>
+                                                <th>Performance Level </th>
+                                            </tr>
+                                            {{--{{dd($performerEntries)}}--}}
 
 
                                             @foreach($performerEntries->where('performance_level',$level) as $pEntry)
@@ -87,11 +87,11 @@
                                             @endforeach
 
 
-                                    </table>
+                                        </table>
 
-                                </div>
+                                    </div>
                                 @endif
-                                <!-- /.card-body -->
+                            <!-- /.card-body -->
                             @endforeach
                         @else
                             <div class="card-header">

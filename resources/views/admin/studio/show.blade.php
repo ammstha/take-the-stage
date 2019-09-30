@@ -163,9 +163,13 @@
                                                     <td>{{ $studioPerformer->average_age }}</td>
                                                     <td>{{ $studioPerformer->age_class}}</td>
                                                     <td>{{ $studioPerformer->performance_level}}</td>
-                                                    <td>{{ $studioPerformer->competitionDetail->name}}</td>
+                                                    <td>
+                                                        <a href="{{route('editEvent',$studioPerformer->id)}}">
+                                                        {{ $studioPerformer->competitionDetail->name}}
+                                                        </a>
+                                                    </td>
 
-                                                    <td><button><a href="{{route('editEvent',$studioPerformer->id)}}">Edit</a></button></td>
+                                                    {{--<td><button><a href="{{route('editEvent',$studioPerformer->id)}}">Edit</a></button></td>--}}
                                                 </tr>
 
                                                 @endforeach

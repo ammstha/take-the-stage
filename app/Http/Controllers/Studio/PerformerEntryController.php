@@ -325,6 +325,7 @@ class PerformerEntryController extends Controller
                 'competition_detail_id'=>$performerEntry->competitionDetail_id,
                 'division'=>$performerEntry->division,
                 'exceed'=>$performerEntry->exceed,
+                'prop'=>$performerEntry->prop,
                 'performerEntry' => $performerEntry->competitionDetail()->first(),
                 'event_name' => $performerEntry->competitionDetail->name,
                 'title' => $performerEntry->title,
