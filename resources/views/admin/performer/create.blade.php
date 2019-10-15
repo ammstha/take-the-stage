@@ -99,17 +99,17 @@
         <div class="row" id="KEY">
             <div class="col-md-2">
                 <label for="name">Performer First Name</label>
-                <input type="text" class="form-control" name="performers[KEY][first_name]">
+                <input type="text" class="form-control" name="performers[KEY][first_name]" required>
             </div>
 
             <div class="col-md-2">
                 <label for="name">Performer Last Name</label>
-                <input type="text" class="form-control" name="performers[KEY][last_name]">
+                <input type="text" class="form-control" name="performers[KEY][last_name]" required>
             </div>
 
             <div class="col-md-3">
                 <label for="name">Date of Birth</label>
-                <input type="date" class="form-control" name="performers[KEY][DOB]">
+                <input type="date" class="form-control" name="performers[KEY][DOB]" required>
             </div>
 
             <div class="col-md-2">
